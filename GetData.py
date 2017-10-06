@@ -1,4 +1,5 @@
 import cassiopeia as cass
+#http://cassiopeia.readthedocs.io/en/latest/
 from cassiopeia import Summoner
 
 #already set API key in config file
