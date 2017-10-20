@@ -13,6 +13,7 @@ def test():
 
     champions = cass.get_champions()
     random_champion = random.choice(champions)
+    #history = cass.get_match_history(summoner,"north_america",0)
     print("He enjoys playing champions such as {name}.".format(name=random_champion.name))
 
     return
