@@ -2,6 +2,7 @@ import cassiopeia as cass
 from cassiopeia import Summoner, Match
 from cassiopeia.data import Season, Queue
 from collections import Counter
+import time
 cass.apply_settings("cassSettings.json")
 
 
@@ -24,11 +25,13 @@ def print_newest_match(name: str, account: int, id: int, region: str):
     # ID from the match data (which it provides directly).
     champion_id_to_name_mapping = {champion.id: champion.name for champion in cass.get_champions(region=region)}
     played_champions = Counter()
+
     for match in match_history:
         champion_id = match.participants[summoner.name].champion.id
         champion_name = champion_id_to_name_mapping[champion_id]
         played_champions[champion_name] += 1
     print("Length of match history:", len(match_history))
+
 
     # Print the aggregated champion results
     print("Top 10 champions {} played:".format(summoner.name))
