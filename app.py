@@ -1,22 +1,24 @@
-from flask import Flask, render_template, request, json
+from flask import Flask, request, json, send_file
 import cassTest
+import cassiopeia as cass
+
+import views.summoner
 
 app = Flask(__name__)
 
 
-@app.route("/findSummoner", methods=['GET'])
-def find_summoner():
-    data = request.args
-    name = data['name']
-    print(name)
-    cassTest.test()
-    return name
+app.register_blueprint(views.summoner.summoner_api, url_prefix="/summoner")
 
 
 @app.route("/")
 def main():
-    return render_template('index.html')
+    return send_file('static/app/index.html')
+
+
+@app.before_first_request
+def cass_setup():
+    cass.apply_settings("cassSettings.json")
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(port="8080")
