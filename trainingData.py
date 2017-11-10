@@ -30,7 +30,6 @@ with open('Data\matches1.json') as data_file:
     ## The first three piece of information will go into match collection to look at the history of that person
 
     number_matches = 0
-
     for j in range(0,100):
 
         participantIdentities = matches[j]["participantIdentities"]
@@ -75,10 +74,10 @@ with open('Data\matches1.json') as data_file:
 
         print(j)
         number_matches += 1
+        print(number_matches)
         time.sleep(2)
-        if( number_matches == 8 ):
-            number_of_matches = 0
+        if( number_matches >= 8 ):
+            number_matches = 0
             time.sleep(130)
-
 
         # pprint(summoner_list1)
