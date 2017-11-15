@@ -1,5 +1,4 @@
-from flask import Flask, request, json, send_file
-import cassTest
+from flask import Flask, send_file
 import cassiopeia as cass
 
 import views.summoner
