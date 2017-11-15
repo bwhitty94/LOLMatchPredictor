@@ -3,5 +3,7 @@ var app = angular.module('LoLMP');
 
 app.service("prediction", function() {
     var summoner;
-    var current_match_id;
+    var currentMatchId;
+    var blueTeam;
+    var redTeam;
 });

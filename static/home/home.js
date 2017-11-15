@@ -9,10 +9,15 @@ app.controller('home', function($scope, $location, $window, prediction) {
                 url: "/summoner/find?name=" + $('#summonerName').val(),
                 type: "get",
                 success: function(response) {
-                    console.log("name is: " + response);
-                    console.log("blueTeam: " + response.champ);
+                    console.log(response);
+
+                    // set the values of the prediction service
                     prediction.summoner = response.summoner;
-                    prediction.current_match_id = response.current_match_id;
+                    prediction.currentMatchId = response.currentMatchId;
+                    prediction.blueTeam = response.blueTeam;
+                    prediction.redTeam = response.redTeam;
+
+                    // route to the prediction
                     $window.location = '/#!/prediction';
                 },
                 error: function(xhr) {
@@ -20,8 +25,6 @@ app.controller('home', function($scope, $location, $window, prediction) {
                     console.log("invalid name");
                 }
             });
-            console.log("hello?");
-            $location.path('/');
         });
     });
 });
