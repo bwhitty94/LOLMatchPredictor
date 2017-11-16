@@ -1,0 +1,15 @@
+input {
+    color: black;
+}
+
+button {
+    color: black;
+}
+
+.home {
+    text-align: center;
+}
+
+.prompt {
+    margin: 0 auto;
+}

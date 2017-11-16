@@ -7,8 +7,7 @@
                     <p class="imageText">{{champ.name}}</p>
                 </div>
             </div>
-            <p>{{champ.summoner}}</p>
-
+            <p class="summonerName">{{champ.summoner}}</p>
         </div>
     </div>
     <div>
@@ -16,9 +15,13 @@
     </div>
     <div class="redTeam">
         <div class="summoner" ng-repeat="champ in redTeam">
-            <img ng-src="{{champ.imageUrl}}" height="275px" max-width="100%">
-            <p>{{champ.summoner}}</p>
-            <p>{{champ.name}}</p>
+            <div class="champImg">
+                <img ng-src="{{champ.imageUrl}}" height="275px" max-width="100%">
+                <div class="imageTextBG">
+                    <p class="imageText">{{champ.name}}</p>
+                </div>
+            </div>
+            <p class="summonerName">{{champ.summoner}}</p>
         </div>
     </div>
 </div>

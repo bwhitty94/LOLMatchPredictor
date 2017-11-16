@@ -1,48 +1,60 @@
-body {
-    background-image: url("../images/summonersRiftBG.jpg");
-    color: white;
-}
-
 .blueTeam, .redTeam {
     margin: 0 auto;
 }
 
 .prediction {
-    display: inline;
+    display: none;
     text-align: center;
 }
 
 .summoner {
     display: inline-block;
-    padding: 0px 3px 0px 3px;
+    margin: 0px 5px 0px 5px;
+    box-sizing: border-box;
+}
+
+.summonerName {
+    margin: 0;
+}
+
+.blueTeam .summoner {
+    background-color: #0f0f46;
+    border: 3px solid #286090;
+}
+
+.redTeam .summoner {
+    background-color: #460f0f;
+    border: 3px solid #902828;
 }
 
 .champImg {
     position: relative;
 }
 
-.blueTeam .summoner img{
-   border: 3px solid blue;
-}
-
-.redTeam .summoner img{
-    border: 3px solid red;
-}
-
 .textStroke {
-    color: gold;
-    text-shadow:
-    -1px -1px 3px black,
-    1px -1px 3px black,
-    -1px 1px 3px black,
-    1px 1px 3px black;
+    color: #ffbe00;
+    text-shadow: -1px -1px 4px black, 2px -1px 0px black, 1px 1px 3px black, 1px 1px 0px black;
+    font-family: "Times New Roman", Georgia, Serif;
+    margin: 10px 0px 10px 0px;
+}
+
+.imageText {
+    margin-bottom: 0px;
+}
+
+.blueTeam .imageText {
+    color: #4499e2;
+}
+
+.redTeam .imageText {
+    color: #e24444;
 }
 
 .imageTextBG {
     position: absolute;
-    top: 97%;
+    top: 96%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: rgba(0, 0, 0, .5);
+    background-color: rgba(0, 0, 0, .65);
     width: 100%;
 }

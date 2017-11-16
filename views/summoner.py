@@ -14,10 +14,6 @@ def find_summoner():
     blue_team = get_champions(summoner.current_match.blue_team.participants)
     red_team = get_champions(summoner.current_match.red_team.participants)
 
-
-    # blueChamps = get_champions(blue_team)
-    # red_champs = get_champions(red_team)
-
     if not summoner.exists:
         abort(404, ["Summoner not found"])
 
