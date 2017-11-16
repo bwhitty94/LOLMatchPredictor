@@ -60,9 +60,14 @@ with open('Data\matches1.json') as data_file:
                     if(int(rankedData[0]['entries'][k]['playerOrTeamId']) == summonerId[i]):
                         isId = True
                 except (IndexError):
+                    k += 1
+                    print(k)
+                    print('found an IndexError')
+                    if (k >= 201):
+                        isId = True
                     continue
                 k += 1
-                if(k == 201):
+                if(k >= 201):
                    isId = True
             k -= 1
             try:
@@ -76,7 +81,7 @@ with open('Data\matches1.json') as data_file:
                 isError = True;
                 continue
             win_ratio = wins / (wins + losses)
-            print("wins:" + '{:4}'.format(str(wins)) + " losses:" + '{:4}'.format(str(losses))+ " win ratio:" + str(win_ratio))
+            #print("wins:" + '{:4}'.format(str(wins)) + " losses:" + '{:4}'.format(str(losses))+ " win ratio:" + str(win_ratio))
             tmpString += ('{0:.5}'.format(str(win_ratio)) + ",")
         if (isError):
             continue
