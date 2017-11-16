@@ -22,7 +22,7 @@ with open('Data\matches1.json') as data_file:
     matches = data["matches"]
     Id = data["matches"][0]
     region = "na1"
-    APIKey = "RGAPI-160847cf-1695-4b01-9d8d-6d509c6affeb"
+    APIKey = "RGAPI-5f7751d0-2d0d-4313-b26b-08c642a72245"
     newfile = open("newfile.txt", "w+")
 
     ## Ranks
@@ -53,16 +53,30 @@ with open('Data\matches1.json') as data_file:
 
         for i in  range(0, 10):
             rankedData = requestRankedData(region, str(summonerId[i]), APIKey)
+            k = 0
+            isId = False
+            while (isId == False  ):
+                try:
+                    if(int(rankedData[0]['entries'][k]['playerOrTeamId']) == summonerId[i]):
+                        isId = True
+                except (IndexError):
+                    continue
+                k += 1
+                if(k == 201):
+                   isId = True
+            k -= 1
             try:
-             wins = rankedData[0]['entries'][1]['wins']
-             losses = rankedData[0]['entries'][1]['losses']
+             wins = rankedData[0]['entries'][k]['wins']
+             losses = rankedData[0]['entries'][k]['losses']
+            # print(rankedData[0]['tier'])
+            # print(rankedData[0]['entries'][1]['rank'])
             except (IndexError):
                 tmpString = ""
                 print('found an IndexError')
                 isError = True;
                 continue
             win_ratio = wins / (wins + losses)
-            #print("wins:" + '{:4}'.format(str(wins)) + " losses:" + '{:4}'.format(str(losses))+ " win ratio:" + str(win_ratio))
+            print("wins:" + '{:4}'.format(str(wins)) + " losses:" + '{:4}'.format(str(losses))+ " win ratio:" + str(win_ratio))
             tmpString += ('{0:.5}'.format(str(win_ratio)) + ",")
         if (isError):
             continue
@@ -75,7 +89,7 @@ with open('Data\matches1.json') as data_file:
         print(j)
         number_matches += 1
         print(number_matches)
-        time.sleep(2)
+        time.sleep(1)
         if( number_matches >= 8 ):
             number_matches = 0
             time.sleep(130)
