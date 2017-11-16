@@ -30,7 +30,7 @@ with open('Data\matches1.json') as data_file:
     ## The first three piece of information will go into match collection to look at the history of that person
 
     number_matches = 0
-    for j in range(0,100):
+    for j in range(99,100):
 
         participantIdentities = matches[j]["participantIdentities"]
         participant = matches[j]["participants"]
