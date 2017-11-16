@@ -1,16 +1,21 @@
-<div class="container">
-    <div class="row blueTeam">
-        <div class="col-md-2 summoner" ng-repeat="champ in blueTeam">
-            <img ng-src="{{champ.imageUrl}}" height="275px" max-width="100%">
+<div class="prediction">
+    <div class="blueTeam">
+        <div class="summoner" ng-repeat="champ in blueTeam">
+            <div class="champImg">
+                <img ng-src="{{champ.imageUrl}}" height="275px" max-width="100%">
+                <div class="imageTextBG">
+                    <p class="imageText">{{champ.name}}</p>
+                </div>
+            </div>
             <p>{{champ.summoner}}</p>
-            <p>{{champ.name}}</p>
+
         </div>
     </div>
     <div>
-        <h1>VS</h1>
+        <h1 class="textStroke">VS</h1>
     </div>
-    <div class="row redTeam">
-        <div class="col-md-2 summoner" ng-repeat="champ in redTeam">
+    <div class="redTeam">
+        <div class="summoner" ng-repeat="champ in redTeam">
             <img ng-src="{{champ.imageUrl}}" height="275px" max-width="100%">
             <p>{{champ.summoner}}</p>
             <p>{{champ.name}}</p>

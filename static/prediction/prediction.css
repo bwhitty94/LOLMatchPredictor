@@ -1,8 +1,48 @@
 body {
-    background-color: black;
+    background-image: url("../images/summonersRiftBG.jpg");
     color: white;
 }
 
-.summoner {
+.blueTeam, .redTeam {
+    margin: 0 auto;
+}
 
+.prediction {
+    display: inline;
+    text-align: center;
+}
+
+.summoner {
+    display: inline-block;
+    padding: 0px 3px 0px 3px;
+}
+
+.champImg {
+    position: relative;
+}
+
+.blueTeam .summoner img{
+   border: 3px solid blue;
+}
+
+.redTeam .summoner img{
+    border: 3px solid red;
+}
+
+.textStroke {
+    color: gold;
+    text-shadow:
+    -1px -1px 3px black,
+    1px -1px 3px black,
+    -1px 1px 3px black,
+    1px 1px 3px black;
+}
+
+.imageTextBG {
+    position: absolute;
+    top: 97%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, .5);
+    width: 100%;
 }
