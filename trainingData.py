@@ -17,12 +17,14 @@ def requestRankedData(region, ID, APIKey):
     return response.json()
 
 with open('Data\matches1.json') as data_file:
+    #matches2.json
+    #
     data = json.load(data_file)
     duration = data["matches"][0]["gameDuration"]
     matches = data["matches"]
     Id = data["matches"][0]
     region = "na1"
-    APIKey = "RGAPI-5f7751d0-2d0d-4313-b26b-08c642a72245"
+    APIKey = "RGAPI-bab5bfbe-5896-47fd-bcbe-63cb10e31927"
     newfile = open("newfile.txt", "w+")
 
     ## Ranks
@@ -30,7 +32,7 @@ with open('Data\matches1.json') as data_file:
     ## The first three piece of information will go into match collection to look at the history of that person
 
     number_matches = 0
-    for j in range(99,100):
+    for j in range(0,100):
 
         participantIdentities = matches[j]["participantIdentities"]
         participant = matches[j]["participants"]
@@ -71,30 +73,38 @@ with open('Data\matches1.json') as data_file:
                    isId = True
             k -= 1
             try:
-             wins = rankedData[0]['entries'][k]['wins']
-             losses = rankedData[0]['entries'][k]['losses']
-            # print(rankedData[0]['tier'])
-            # print(rankedData[0]['entries'][1]['rank'])
+             #wins = rankedData[0]['entries'][k]['wins']
+             #losses = rankedData[0]['entries'][k]['losses']
+             tier = rankedData[0]['tier']
+             rank = rankedData[0]['entries'][k]['rank']
             except (IndexError):
                 tmpString = ""
                 print('found an IndexError')
                 isError = True;
                 continue
-            win_ratio = wins / (wins + losses)
+            #win_ratio = wins / (wins + losses)
             #print("wins:" + '{:4}'.format(str(wins)) + " losses:" + '{:4}'.format(str(losses))+ " win ratio:" + str(win_ratio))
-            tmpString += ('{0:.5}'.format(str(win_ratio)) + ",")
+
+            
+
+
+            print("Tier:" + '{:5}'.format(str(tier)) + " Rank:" + '{:5}'.format(str(rank)))
+            tmpString += ('{0:.6}'.format(str(tier)) + ",")
         if (isError):
             continue
         newfile.write(tmpString)
+        print(tmpString)
+
 
         blue_team = data["matches"][j]["teams"][0]["win"]
         result = 1 if blue_team == 'Win' else 0
         newfile.write(str(result) + "\n")
 
+
         print(j)
         number_matches += 1
         print(number_matches)
-        time.sleep(1)
+        time.sleep(2)
         if( number_matches >= 8 ):
             number_matches = 0
             time.sleep(130)
