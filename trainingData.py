@@ -16,6 +16,38 @@ def requestRankedData(region, ID, APIKey):
     response = requests.get(URL)
     return response.json()
 
+def tierSwitch(argument):
+    switcher = {
+        "BRONZE"    : 1,
+        "SILVER"    : 2,
+        "GOLD"      : 3,
+        "PLATINUM"  : 4,
+        "DIAMOND"   : 5,
+        "MASTER"    : 6,
+        "CHALLENGER": 7
+    }
+    return switcher.get(argument, "Invalid tier")
+
+def parseTier(rankedData, index, teamArray):
+    rankModifier = 0
+    tier = rankedData[0]['tier']
+    rank = rankedData[0]['entries'][index]['rank']
+
+    if (str(rank) == "I"):
+        rankModifier = -1
+    if (str(rank) == "V"):
+        rankModifier = 1
+    modefiedRank = tierSwitch(str(tier))+ rankModifier
+    teamArray[modefiedRank] = teamArray[modefiedRank] + 1
+    return teamArray
+
+def win_loss_ratio(rankedData, k):
+    wins = rankedData[0]['entries'][k]['wins']
+    losses = rankedData[0]['entries'][k]['losses']
+    return wins/(wins + losses)
+
+
+
 with open('Data\matches1.json') as data_file:
     #matches2.json
     #
@@ -24,7 +56,7 @@ with open('Data\matches1.json') as data_file:
     matches = data["matches"]
     Id = data["matches"][0]
     region = "na1"
-    APIKey = "RGAPI-bab5bfbe-5896-47fd-bcbe-63cb10e31927"
+    APIKey = "RGAPI-c60d9bf3-c4d4-499e-a2f3-7b6c2d031af7"
     newfile = open("newfile.txt", "w+")
 
     ## Ranks
@@ -40,7 +72,12 @@ with open('Data\matches1.json') as data_file:
         summonerId = []
         accountId = []
         championId = []
-        tmpString = ""
+
+        winLossOne = 0
+        winLossTwo = 0
+        teamArrayOne = [0] *9
+        teamArrayTwo = [0] *9
+
         isError = False
 
         for i in range(0,10):
@@ -70,43 +107,37 @@ with open('Data\matches1.json') as data_file:
                     continue
                 k += 1
                 if(k >= 201):
-                   isId = True
+                    isId = True
             k -= 1
             try:
-             #wins = rankedData[0]['entries'][k]['wins']
-             #losses = rankedData[0]['entries'][k]['losses']
-             tier = rankedData[0]['tier']
-             rank = rankedData[0]['entries'][k]['rank']
+                if (i < 5):
+                    parseTier(rankedData, i, teamArrayOne)
+                    winLossOne = winLossOne + win_loss_ratio(rankedData, i)
+                else:
+                    parseTier(rankedData, i, teamArrayTwo)
+                    winLossTwo = winLossTwo + win_loss_ratio(rankedData, i)
             except (IndexError):
-                tmpString = ""
                 print('found an IndexError')
-                isError = True;
+                isError = True
                 continue
-            #win_ratio = wins / (wins + losses)
-            #print("wins:" + '{:4}'.format(str(wins)) + " losses:" + '{:4}'.format(str(losses))+ " win ratio:" + str(win_ratio))
-
-            
-
-
-            print("Tier:" + '{:5}'.format(str(tier)) + " Rank:" + '{:5}'.format(str(rank)))
-            tmpString += ('{0:.6}'.format(str(tier)) + ",")
         if (isError):
             continue
-        newfile.write(tmpString)
-        print(tmpString)
 
+        tmpString = str(teamArrayOne).strip("[]")
+        tmpString += ", " + str('{0:.4g}'.format(winLossOne/5))
+        tmpString += str(teamArrayTwo).strip("[]")
+        tmpString += ", " + str('{0:.4g}'.format(winLossTwo/5))
+        newfile.write(tmpString)
 
         blue_team = data["matches"][j]["teams"][0]["win"]
         result = 1 if blue_team == 'Win' else 0
-        newfile.write(str(result) + "\n")
+        newfile.write(", " + str(result) + "\n")
 
 
         print(j)
         number_matches += 1
         print(number_matches)
-        time.sleep(2)
+        time.sleep(1)
         if( number_matches >= 8 ):
             number_matches = 0
             time.sleep(130)
-
-        # pprint(summoner_list1)
