@@ -58,3 +58,25 @@
     background-color: rgba(0, 0, 0, .65);
     width: 100%;
 }
+
+.teams {
+    display: inline-block;
+    margin: 0 auto;
+}
+
+.percents {
+    display: inline-block;
+}
+
+.percent {
+    display: block;
+    font-size: 500%;
+}
+
+.blueTeam .percent {
+    color: #1f98ff;
+}
+
+.redTeam .percent {
+    color: #e24444;
+}

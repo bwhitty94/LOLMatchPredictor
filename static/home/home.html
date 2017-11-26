@@ -1,7 +1,21 @@
 <div class="home">
     <div class="prompt">
-        <p>Enter Summoner Name:</p>
-        <input id="summonerName" value="MiniD0ge">
-        <button id="findSummoner">Submit</button>
+        <img src="/static/images/LoL_logo.png" height="25%" width="25%">
+        <h1 class="logo">Match Predictor</h1>
+
+        <hr style="border-color: black; width: 50%;">
+
+        <h2 class="instruction">Enter Summoner Name:</h2>
+
+        <div class="row">
+            <div class="col-md-3 col-centered">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="summonerName" placeholder="Summoner Name">
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" id="findSummoner" type="button">Predict</button>
+                    </span>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

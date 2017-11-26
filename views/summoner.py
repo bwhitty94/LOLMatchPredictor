@@ -32,8 +32,9 @@ def get_champions(team):
         champ = Champion(id=participant.champion.id)
         image = image_base_url + champ.image.full.split(".")[0] + "_0.jpg"
 
-        champions.append({"summoner": participant.summoner.name, "id": champ.id, "name": champ.name, "imageUrl": image})
+        champions.append({"summoner": participant.summoner.name, "id": champ.id, "name": champ.name, "imageUrl": image,
+                          "summonerId": participant.summoner.id})
 
-        print(champ.image)
+        print(participant.summoner.id)
 
     return champions

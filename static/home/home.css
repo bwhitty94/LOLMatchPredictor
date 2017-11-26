@@ -1,9 +1,21 @@
-input {
-    color: black;
+/*
+input#summonerName {
+    color: white;
+    background-color: black;
+    border: 2px solid #777777;
+    border-radius: 4px;
+    padding-left: 1%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    width: 15%;
+    box-sizing: border-box;
+    font-size: 125%;
 }
+*/
 
-button {
-    color: black;
+.col-centered {
+    margin: 0 auto;
+    float: none;
 }
 
 .home {
@@ -12,4 +24,17 @@ button {
 
 .prompt {
     margin: 0 auto;
+}
+
+.logo {
+    margin-top: 0px;
+    color: #f6d56e;
+    text-shadow: -1px -1px 4px black, 2px -1px 0px black, 1px 1px 3px black, 1px 1px 0px black;
+    font-family: "Times New Roman", Georgia, Serif;
+}
+
+.instruction {
+    color: #f6d56e;
+    text-shadow: -1px -1px 4px black, 2px -1px 0px black, 1px 1px 3px black, 1px 1px 0px black;
+    font-family: "Times New Roman", Georgia, Serif;
 }
