@@ -5,6 +5,9 @@ from pprint import pprint
 import matchCollection
 import cassiopeia as cass
 import leagues
+import py_gg
+import ChampWins
+
 
 def requestSummonerData(region, summonerName, APIKey):
     URL = "https://" + region + ".api.riotgames.com/lol/summoner/v3/summoners/by-name/" + summonerName + "?api_key=" + APIKey
@@ -46,7 +49,7 @@ def win_loss_ratio(rankedData, k):
     losses = rankedData[0]['entries'][k]['losses']
     return wins/(wins + losses)
 
-
+champWins = ChampWins.getChampWinrates()
 
 with open('Data\matches1.json') as data_file:
     #matches2.json
@@ -72,7 +75,7 @@ with open('Data\matches1.json') as data_file:
         summonerId = []
         accountId = []
         championId = []
-
+        champ_winrate = []
         winLossOne = ""
         winLossTwo = ""
         teamArrayOne = [0] *9
@@ -94,6 +97,7 @@ with open('Data\matches1.json') as data_file:
             rankedData = requestRankedData(region, str(summonerId[i]), APIKey)
             k = 0
             isId = False
+            champ_winrate.append(champWins[championId[i]])
             while (isId == False  ):
                 try:
                     if(int(rankedData[0]['entries'][k]['playerOrTeamId']) == summonerId[i]):
@@ -122,11 +126,14 @@ with open('Data\matches1.json') as data_file:
                 continue
         if (isError):
             continue
-
+       
         tmpString = str(teamArrayOne).strip("[]") + ", "
         tmpString += winLossOne
+        tmpString += str(champ_winrate[0:5]).strip("[]") + ", "
         tmpString += str(teamArrayTwo).strip("[]") + ", "
         tmpString += winLossTwo
+        tmpString += str(champ_winrate[5:10]).strip("[]") + ", "
+
         newfile.write(tmpString)
 
         blue_team = data["matches"][j]["teams"][0]["win"]
