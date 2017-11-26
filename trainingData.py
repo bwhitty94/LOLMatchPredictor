@@ -56,7 +56,7 @@ with open('Data\matches1.json') as data_file:
     matches = data["matches"]
     Id = data["matches"][0]
     region = "na1"
-    APIKey = "RGAPI-c60d9bf3-c4d4-499e-a2f3-7b6c2d031af7"
+    APIKey = "RGAPI-9433113f-5b8e-4746-9fd5-57f96570e88c"
     newfile = open("newfile.txt", "w+")
 
     ## Ranks
@@ -64,7 +64,7 @@ with open('Data\matches1.json') as data_file:
     ## The first three piece of information will go into match collection to look at the history of that person
 
     number_matches = 0
-    for j in range(0,100):
+    for j in range(0,1):
 
         participantIdentities = matches[j]["participantIdentities"]
         participant = matches[j]["participants"]
@@ -73,8 +73,8 @@ with open('Data\matches1.json') as data_file:
         accountId = []
         championId = []
 
-        winLossOne = 0
-        winLossTwo = 0
+        winLossOne = ""
+        winLossTwo = ""
         teamArrayOne = [0] *9
         teamArrayTwo = [0] *9
 
@@ -112,10 +112,10 @@ with open('Data\matches1.json') as data_file:
             try:
                 if (i < 5):
                     parseTier(rankedData, i, teamArrayOne)
-                    winLossOne = winLossOne + win_loss_ratio(rankedData, i)
+                    winLossOne += (str('{0:.4g}'.format(win_loss_ratio(rankedData, i))) + ", ")
                 else:
                     parseTier(rankedData, i, teamArrayTwo)
-                    winLossTwo = winLossTwo + win_loss_ratio(rankedData, i)
+                    winLossTwo += (str('{0:.4g}'.format(win_loss_ratio(rankedData, i))) + ", ")
             except (IndexError):
                 print('found an IndexError')
                 isError = True
@@ -123,15 +123,15 @@ with open('Data\matches1.json') as data_file:
         if (isError):
             continue
 
-        tmpString = str(teamArrayOne).strip("[]")
-        tmpString += ", " + str('{0:.4g}'.format(winLossOne/5))
-        tmpString += str(teamArrayTwo).strip("[]")
-        tmpString += ", " + str('{0:.4g}'.format(winLossTwo/5))
+        tmpString = str(teamArrayOne).strip("[]") + ", "
+        tmpString += winLossOne
+        tmpString += str(teamArrayTwo).strip("[]") + ", "
+        tmpString += winLossTwo
         newfile.write(tmpString)
 
         blue_team = data["matches"][j]["teams"][0]["win"]
         result = 1 if blue_team == 'Win' else 0
-        newfile.write(", " + str(result) + "\n")
+        newfile.write( str(result) + "\n")
 
 
         print(j)
