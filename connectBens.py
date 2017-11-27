@@ -1,5 +1,7 @@
 import requests
 import time
+import ChampWins
+
 
 def requestSummonerData(region, summonerName, APIKey):
     URL = "https://" + region + ".api.riotgames.com/lol/summoner/v3/summoners/by-name/" + summonerName + "?api_key=" + APIKey
@@ -11,27 +13,67 @@ def requestRankedData(region, ID, APIKey):
     response = requests.get(URL)
     return response.json()
 
+def tierSwitch(argument):
+    switcher = {
+        "BRONZE"    : 1,
+        "SILVER"    : 2,
+        "GOLD"      : 3,
+        "PLATINUM"  : 4,
+        "DIAMOND"   : 5,
+        "MASTER"    : 6,
+        "CHALLENGER": 7
+    }
+    return switcher.get(argument, "Invalid tier")
+
+def parseTier(rankedData, index, teamArray):
+    rankModifier = 0
+    tier = rankedData[0]['tier']
+    rank = rankedData[0]['entries'][index]['rank']
+
+    if (str(rank) == "I"):
+        rankModifier = -1
+    if (str(rank) == "V"):
+        rankModifier = 1
+    modefiedRank = tierSwitch(str(tier))+ rankModifier
+    teamArray[modefiedRank] = teamArray[modefiedRank] + 1
+    return teamArray
+
+def win_loss_ratio(rankedData, k):
+    wins = rankedData[0]['entries'][k]['wins']
+    losses = rankedData[0]['entries'][k]['losses']
+    return wins/(wins + losses)
+
 def connectStuff(team):
     summonerId = []
+    championId = []
+    winLossOne = ""
+    winLossTwo = ""
+    teamArrayOne = [0] * 9
+    teamArrayTwo = [0] * 9
+
     #this is the format of whats coming in "team"
     #champions.append({"summoner": participant.summoner.name, "id": champ.id, "name": champ.name, "imageUrl": image})
     for e in range(0,10):
         summonerId.append(team[e]["summonerId"])
+        championId.append(team[e]["id"])
     region = "na1"
-    APIKey = "RGAPI-7d5fb1a7-399c-4289-9801-54d1dde10d3e"
+    APIKey = "RGAPI-1ca7f033-2221-4f4f-ab5a-52c389340ec4"
     currentmatchfile = open("currentmatchfile.txt", "w+")
     number_matches = 0
 
-
+    champWins = ChampWins.getChampWinrates()
+    champ_winrate = []
     for j in range(0,1):
 
         tmpString = ""
         isError = False
 
+
         for i in  range(0, 10):
             rankedData = requestRankedData(region, str(summonerId[i]), APIKey)
             k = 0
             isId = False
+            champ_winrate.append(champWins[championId[i]])
             while (isId == False  ):
                 try:
                     if(int(rankedData[0]['entries'][k]['playerOrTeamId']) == int(summonerId[i])):
@@ -48,27 +90,36 @@ def connectStuff(team):
                    isId = True
             k -= 1
             try:
-             wins = rankedData[0]['entries'][k]['wins']
-             losses = rankedData[0]['entries'][k]['losses']
-             #tier = rankedData[0]['tier']
-             #rank = rankedData[0]['entries'][k]['rank']
+                if (i < 5):
+                    parseTier(rankedData, i, teamArrayOne)
+                    winLossOne += (str('{0:.4g}'.format(win_loss_ratio(rankedData, i))) + ", ")
+                else:
+                    parseTier(rankedData, i, teamArrayTwo)
+                    winLossTwo += (str('{0:.4g}'.format(win_loss_ratio(rankedData, i))) + ", ")
             except (IndexError):
                 tmpString = ""
                 print('found an IndexError')
-                isError = True;
+                isError = True
                 continue
-            win_ratio = wins / (wins + losses)
-            print("wins:" + '{:4}'.format(str(wins)) + " losses:" + '{:4}'.format(str(losses))+ " win ratio:" + str(win_ratio))
+            #win_ratio = wins / (wins + losses)
+            #print("wins:" + '{:4}'.format(str(wins)) + " losses:" + '{:4}'.format(str(losses))+ " win ratio:" + str(win_ratio))
             #print("Tier:" + '{:5}'.format(str(tier)) + " Rank:" + '{:5}'.format(str(rank)))
-            tmpString += ('{0:.6}'.format(str(win_ratio)) + ",")
+            #tmpString += ('{0:.6}'.format(str(win_ratio)) + ",")
 
         if (isError):
             continue
+
+        tmpString = str(teamArrayOne).strip("[]") + ", "
+        tmpString += winLossOne
+        tmpString += str(champ_winrate[0:5]).strip("[]") + ", "
+        tmpString += str(teamArrayTwo).strip("[]") + ", "
+        tmpString += winLossTwo
+        tmpString += str(champ_winrate[5:10]).strip("[]") + ", "
         currentmatchfile.write(tmpString)
-        print(tmpString)
+
 
         number_matches += 1
-        print("We went through the first five players Ben: Successful Exit")
+        print("We went through the list of players Ben!: Successful Exit")
         time.sleep(2)
 
 
