@@ -127,6 +127,7 @@ def connectStuff(team):
             number_matches = 0
             time.sleep(130)
 
+
 if __name__ == "__main__":
     #[['TastyKakeKing2', 'xouchiesssx', 'hautala147', 'xPÃ\xadnny', 'McLovin1500', 'CypherNek', 'Ã?eath MÃ£rk',
     #  'Monkeyfightr', 'JasonXD', 'xoMajesty'],
