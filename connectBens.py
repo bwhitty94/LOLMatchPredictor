@@ -117,7 +117,6 @@ def connectStuff(team):
         tmpString += str(champ_winrate[5:10]).strip("[]") + ", "
         currentmatchfile.write(tmpString)
 
-
         number_matches += 1
         print("We went through the list of players Ben!: Successful Exit")
         time.sleep(2)
