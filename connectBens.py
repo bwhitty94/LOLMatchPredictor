@@ -117,7 +117,6 @@ def connectStuff(team):
         tmpString += str(champ_winrate[5:10]).strip("[]") + ", "
         currentmatchfile.write(tmpString)
 
-
         number_matches += 1
         print("We went through the list of players Ben!: Successful Exit")
         time.sleep(2)
@@ -127,6 +126,7 @@ def connectStuff(team):
         if( number_matches >= 8 ):
             number_matches = 0
             time.sleep(130)
+
 
 if __name__ == "__main__":
     #[['TastyKakeKing2', 'xouchiesssx', 'hautala147', 'xPÃ\xadnny', 'McLovin1500', 'CypherNek', 'Ã?eath MÃ£rk',
