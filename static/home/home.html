@@ -5,14 +5,19 @@
 
         <hr style="border-color: black; width: 50%;">
 
+        <div id="alert"></div>
+
         <h2 class="instruction">Enter Summoner Name:</h2>
 
         <div class="row">
             <div class="col-md-3 col-centered">
                 <div class="input-group">
-                    <input type="text" class="form-control" id="summonerName" placeholder="Summoner Name">
+                    <input type="text" class="form-control" id="summonerName" placeholder="Summoner Name"
+                           ng-model="summonerName">
                     <span class="input-group-btn">
-                        <button class="btn btn-primary" id="findSummoner" type="button">Predict</button>
+                        <button class="btn btn-primary" id="findSummoner" type="button" ng-disabled="!summonerName">
+                            Predict
+                        </button>
                     </span>
                 </div>
             </div>

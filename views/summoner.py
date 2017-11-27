@@ -11,14 +11,15 @@ def find_summoner():
     name = data['name']
 
     summoner = cass.get_summoner(name=name)
-    blue_team = get_champions(summoner.current_match.blue_team.participants)
-    red_team = get_champions(summoner.current_match.red_team.participants)
 
     if not summoner.exists:
-        abort(404, ["Summoner not found"])
+        return jsonify(error="Summoner name not found!")
 
     if not summoner.current_match.exists:
-        abort(404, ["Match not found"])
+        return jsonify(error="" + summoner.name + " is not currently in a match!")
+
+    blue_team = get_champions(summoner.current_match.blue_team.participants)
+    red_team = get_champions(summoner.current_match.red_team.participants)
 
     return jsonify(summoner=name, currentMatchId=summoner.current_match.id, blueTeam=blue_team, redTeam=red_team)
 
