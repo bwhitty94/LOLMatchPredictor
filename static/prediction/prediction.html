@@ -1,7 +1,7 @@
 <div class="prediction">
     <div class="percent textStroke" style="color: #0862af"><b>60%</b></div>
     <div class="blueTeam">
-        <div class="summoner" ng-repeat="champ in blueTeam">
+        <div class="summoner" ng-repeat="champ in blueTeam track by $index">
             <div class="champImg">
                 <img ng-src="{{champ.imageUrl}}" height="275px" max-width="100%">
                 <div class="imageTextBG">
@@ -15,7 +15,7 @@
         <h1 class="textStroke">VS</h1>
     </div>
     <div class="redTeam">
-        <div class="summoner" ng-repeat="champ in redTeam">
+        <div class="summoner" ng-repeat="champ in redTeam track by $index">
             <div class="champImg">
                 <img ng-src="{{champ.imageUrl}}" height="275px" max-width="100%">
                 <div class="imageTextBG">
