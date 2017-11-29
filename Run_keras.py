@@ -22,7 +22,7 @@ def runKeras():
     # load pima indians dataset
     dataSet = numpy.loadtxt("All_matchdata.txt", delimiter=",")
     match= numpy.loadtxt("currentmatchfile.txt", delimiter = ",")
-    match_data = match[5,0:38]
+    match_data = match[0:38]
     # split into input (X) and output (Y) variables
     X_training = dataSet[0:,0:38]
     Y_training = dataSet[0:,38]
@@ -39,6 +39,6 @@ def runKeras():
 
     bensValue = categorizePrediction(prediction)
     return bensValue
-
+#
 # if __name__ == "__main__":
-    # runKeras()
+#     print(runKeras())
