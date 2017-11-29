@@ -80,3 +80,16 @@
 .redTeam .percent {
     color: #e24444;
 }
+
+.predictionText {
+    display: block;
+    font-size: 300%;
+}
+
+.predictionText.blueTeam {
+    color: #1f98ff;
+}
+
+.predictionText.redTeam {
+    color: #e24444;
+}

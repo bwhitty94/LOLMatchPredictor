@@ -36,6 +36,4 @@ def get_champions(team):
         champions.append({"summoner": participant.summoner.name, "id": champ.id, "name": champ.name, "imageUrl": image,
                           "summonerId": participant.summoner.id})
 
-        print(participant.summoner.id)
-
     return champions
