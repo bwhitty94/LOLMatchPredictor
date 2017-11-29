@@ -19,6 +19,20 @@ app.controller('home', function($rootScope, $scope, $location, $window, $compile
         });
     };
 
+    function getPrediction() {
+        $.ajax({
+            url: "/summoner/find?name=" + $('#summonerName').val(),
+            type: "get",
+            success: function(response) {
+
+            },
+            error: function(xhr) {
+            //Do Something to handle error
+                console.log("error");
+            }
+        });
+    };
+
     $(document).ready(function() {
         $("#summonerName").keyup(function(event) {
             if (event.keyCode === 13) {

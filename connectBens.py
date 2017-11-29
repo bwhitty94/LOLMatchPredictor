@@ -1,6 +1,7 @@
 import requests
 import time
 import ChampWins
+import settings
 
 
 def requestSummonerData(region, summonerName, APIKey):
@@ -57,7 +58,7 @@ def connectStuff(team):
         summonerId.append(team[e]["summonerId"])
         championId.append(team[e]["id"])
     region = "na1"
-    APIKey = "RGAPI-1ca7f033-2221-4f4f-ab5a-52c389340ec4"
+    APIKey = settings.getAPIKey()
     currentmatchfile = open("currentmatchfile.txt", "w+")
     number_matches = 0
 
