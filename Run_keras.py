@@ -17,10 +17,12 @@ def categorizePrediction(score):
         return 5
     return 0
 
-def runKeras(match_data):
+def runKeras():
     numpy.random.seed(100)
     # load pima indians dataset
     dataSet = numpy.loadtxt("All_matchdata.txt", delimiter=",")
+    match= numpy.loadtxt("currentmatchfile.txt", delimiter = ",")
+    match_data = match[5,0:38]
     # split into input (X) and output (Y) variables
     X_training = dataSet[0:,0:38]
     Y_training = dataSet[0:,38]
@@ -34,12 +36,9 @@ def runKeras(match_data):
     # Fit the model
     model.fit(X_training, Y_training, epochs=200, batch_size=10)
     prediction = model.predict(numpy.array(match_data, ndmin = 2))
-    print (prediction)
+
     bensValue = categorizePrediction(prediction)
-    print(bensValue)
     return bensValue
 
 # if __name__ == "__main__":
-    # match= numpy.loadtxt("match8_final.txt", delimiter = ",")
-    # match_data = match[5,0:38]
-    # runKeras(match_data)
+    # runKeras()
