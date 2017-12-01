@@ -1,6 +1,8 @@
 import requests
 import time
 import ChampWins
+import numpy
+import Run_keras
 
 
 def requestSummonerData(region, summonerName, APIKey):
@@ -57,7 +59,7 @@ def connectStuff(team):
         summonerId.append(team[e]["summonerId"])
         championId.append(team[e]["id"])
     region = "na1"
-    APIKey = "RGAPI-1ca7f033-2221-4f4f-ab5a-52c389340ec4"
+    APIKey = "RGAPI-49c9a09b-a1b1-44b8-a246-d7e235c57d84"
     currentmatchfile = open("currentmatchfile.txt", "w+")
     number_matches = 0
 
@@ -114,18 +116,17 @@ def connectStuff(team):
         tmpString += str(champ_winrate[0:5]).strip("[]") + ", "
         tmpString += str(teamArrayTwo).strip("[]") + ", "
         tmpString += winLossTwo
-        tmpString += str(champ_winrate[5:10]).strip("[]") + ", "
+        tmpString += str(champ_winrate[5:10]).strip("[]")
         currentmatchfile.write(tmpString)
+        currentmatchfile.flush()
 
         number_matches += 1
         print("We went through the list of players Ben!: Successful Exit")
-        time.sleep(2)
+        thing = numpy.loadtxt("currentmatchfile.txt",delimiter =",")
+        thing_2= thing[0:38]
 
+        return Run_keras.predictMatch(thing_2)
 
- # keep this in incase you want to change this function
-        if( number_matches >= 8 ):
-            number_matches = 0
-            time.sleep(130)
 
 
 if __name__ == "__main__":
