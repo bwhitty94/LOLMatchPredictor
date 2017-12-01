@@ -20,7 +20,6 @@ app.controller('home', function($rootScope, $scope, $location, $window, $compile
     };
 
     function getPrediction() {
-        console.log(prediction.blueTeam.concat(prediction.redTeam));
         $http({
             method: 'POST',
             url: '/predict/get',
@@ -31,38 +30,46 @@ app.controller('home', function($rootScope, $scope, $location, $window, $compile
                 'team': prediction.blueTeam.concat(prediction.redTeam)
             }
         }).then(function successCallback(response) {
-            console.log('success');
-            prediction.value = response.value;
+            prediction.value = response.data.value;
+
+            // route to the prediction
+            $window.location = '/#!/prediction';
         }, function errorCallback(response) {
             console.log(response);
         });
-
-//        $.ajax({
-//            url: "/predict/get",
-//            method: "POST",
-//            contentType: "application/json; charset=utf-8",
-//            data: {
-//                'team': prediction.blueTeam.concat(prediction.redTeam)
-//            },
-//            success: function(response) {
-//                prediction.value = response.value;
-//                console.log("val: " + prediction.value);
-//            },
-//            error: function(xhr) {
-//            //Do Something to handle error
-//                console.log(xhr);
-//            }
-//        });
     };
 
     $(document).ready(function() {
-        $("#summonerName").keyup(function(event) {
+        $("#summonerName, #pastGame").keyup(function(event) {
             if (event.keyCode === 13) {
                 $("#findSummoner").click();
             }
         });
 
-        $('#findSummoner').click(function() {
+        $("#viewPastGame").click(function() {
+            $http({
+                method: 'POST',
+                url: '/predict/past',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: {
+                    'gameNum': $scope.pastGame
+                }
+            }).then(function successCallback(response) {
+                // set the values of the prediction service
+                prediction.blueTeam = response.data.blueTeam;
+                prediction.redTeam = response.data.redTeam;
+                prediction.value = response.data.value;
+
+                // route to the prediction
+                $window.location = '/#!/prediction';
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+        });
+
+        $("#findSummoner").click(function() {
             $.ajax({
                 url: "/summoner/find?name=" + $('#summonerName').val(),
                 type: "get",
@@ -72,15 +79,10 @@ app.controller('home', function($rootScope, $scope, $location, $window, $compile
                     }
                     else {
                         // set the values of the prediction service
-                        prediction.summoner = response.summoner;
-                        prediction.currentMatchId = response.currentMatchId;
                         prediction.blueTeam = response.blueTeam;
                         prediction.redTeam = response.redTeam;
 
                         getPrediction();
-
-                        // route to the prediction
-                        $window.location = '/#!/prediction';
                     }
                 },
                 error: function(xhr) {

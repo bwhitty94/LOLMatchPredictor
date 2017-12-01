@@ -26,7 +26,6 @@ function setPredictionColor(team) {
 };
 
 app.controller('prediction', function($scope, $location, prediction, $document) {
-    $scope.summoner = prediction.summoner || JSON.parse(localStorage.getItem("summoner"));
     $scope.blueTeam = prediction.blueTeam || JSON.parse(localStorage.getItem("blueTeam"));
     $scope.redTeam = prediction.redTeam || JSON.parse(localStorage.getItem("redTeam"));
 
@@ -43,7 +42,7 @@ app.controller('prediction', function($scope, $location, prediction, $document) 
             break;
 
         case 2:
-            $scope.predictionString = "Red Team is marginally favored to win!";
+            $scope.predictionString = "Red Team is slightly favored to win!";
             team = "red";
             break;
 
@@ -53,7 +52,7 @@ app.controller('prediction', function($scope, $location, prediction, $document) 
             break;
 
         case 4:
-            $scope.predictionString = "Blue Team is marginally favored to win!";
+            $scope.predictionString = "Blue Team is slightly favored to win!";
             team = "blue";
             break;
 
@@ -69,12 +68,11 @@ app.controller('prediction', function($scope, $location, prediction, $document) 
     setPredictionColor(team);
 
     // set local storage so prediction screen persists through refresh
-    localStorage.setItem("summoner", JSON.stringify($scope.summoner));
     localStorage.setItem("blueTeam", JSON.stringify($scope.blueTeam));
     localStorage.setItem("redTeam", JSON.stringify($scope.redTeam));
     localStorage.setItem("prediction", JSON.stringify(prediction));
 
-    if (!$scope.summoner) {
+    if (!$scope.blueTeam) {
         $location.path('/');
     }
 

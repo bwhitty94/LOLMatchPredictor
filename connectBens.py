@@ -54,9 +54,18 @@ def win_loss_ratio(rankedData, k):
 def connectStuff():
     data = request.json
     print("hello")
-    print(data)
     sys.stdout.flush()
     team = data['team']
+
+    myTeamTest2 = [{'id': 236, 'imageUrl': 'http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Lucian_0.jpg', 'name': 'Lucian', 'summoner': 'Angeladaddy', 'summonerId': 31493105}, {'id': 9, 'imageUrl': 'http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Fiddlesticks_0.jpg', 'name': 'Fiddlesticks', 'summoner': 'CrAsHBiTs', 'summonerId': 22009308}, {'id': 126, 'imageUrl': 'http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Jayce_0.jpg', 'name': 'Jayce', 'summoner': 'Ebrithalia', 'summonerId': 40069399}, {'id': 53, 'imageUrl': 'http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Blitzcrank_0.jpg', 'name': 'Blitzcrank', 'summoner': 'langtreezy', 'summonerId': 32422003}, {'id': 28, 'imageUrl': 'http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Evelynn_0.jpg', 'name': 'Evelynn', 'summoner': 'ThePerfectBronze', 'summonerId': 66359111}, {'id': 127, 'imageUrl': 'http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Lissandra_0.jpg', 'name': 'Lissandra', 'summoner': 'RuPaulogize', 'summonerId': 31660209}, {'id': 114, 'imageUrl': 'http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Fiora_0.jpg', 'name': 'Fiora', 'summoner': 'Aneur', 'summonerId': 20298222}, {'id': 99, 'imageUrl': 'http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Lux_0.jpg', 'name': 'Lux', 'summoner': 'The Buk Lau', 'summonerId': 21556685}, {'id': 15, 'imageUrl': 'http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Sivir_0.jpg', 'name': 'Sivir', 'summoner': 'Nuhthane', 'summonerId': 22289695}, {'id': 43, 'imageUrl': 'http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Karma_0.jpg', 'name': 'Karma', 'summoner': 'LuckyClicker', 'summonerId': 27352036}]
+
+    print("what is this bullshit?")
+    print(team == myTeamTest2)
+
+    print(team)
+    print(myTeamTest2)
+
+    team = myTeamTest2
 
     summonerId = []
     championId = []
@@ -68,6 +77,7 @@ def connectStuff():
     #this is the format of whats coming in "team"
     #champions.append({"summoner": participant.summoner.name, "id": champ.id, "name": champ.name, "imageUrl": image})
     for e in range(0,10):
+        print(team[e]["summonerId"])
         summonerId.append(team[e]["summonerId"])
         championId.append(team[e]["id"])
     region = "na1"
@@ -90,12 +100,14 @@ def connectStuff():
             champ_winrate.append(champWins[championId[i]])
             while (isId == False  ):
                 try:
+                    # print("test: " + str(rankedData[0]['entries'][k]['playerOrTeamId']) + " - " + str(summonerId[i]))
                     if(int(rankedData[0]['entries'][k]['playerOrTeamId']) == int(summonerId[i])):
                         isId = True
                 except (IndexError):
                     k += 1
-                    print(k)
-                    print('found an IndexError')
+                    # print("" + str(k) + " - found an indexError" + str(rankedData[0]))
+                    print(i)
+                    # print('found an IndexError')
                     if (k >= 201):
                         isId = True
                     continue
@@ -120,8 +132,8 @@ def connectStuff():
             #print("Tier:" + '{:5}'.format(str(tier)) + " Rank:" + '{:5}'.format(str(rank)))
             #tmpString += ('{0:.6}'.format(str(win_ratio)) + ",")
 
-        if (isError):
-            continue
+        # if (isError):
+        #     continue
 
         tmpString = str(teamArrayOne).strip("[]") + ", "
         tmpString += winLossOne
@@ -137,9 +149,9 @@ def connectStuff():
         thing = numpy.loadtxt("currentmatchfile.txt",delimiter =",")
         thing_2= thing[0:38]
 
-
+        # return Run_keras.predictMatch(thing_2)
         # return jsonify(value=Run_keras.predictMatch(thing_2))
-        return jsonify(value=3)
+        return jsonify(value=1)
 
 
 
@@ -162,5 +174,10 @@ if __name__ == "__main__":
     myTeamTest.append({"summoner": "hautala147", "id": 63, "name": "NoClue3", "imageUrl": "image34", "summonerId": "23035037"})
     myTeamTest.append({"summoner": "McLovin1500", "id": 1, "name": "NoClue4", "imageUrl": "image4", "summonerId": "34202044"})
     myTeamTest.append({"summoner": "CypherNek", "id": 24, "name": "NoClue5", "imageUrl": "image5", "summonerId": "36041723"})
-    print(myTeamTest)
-    connectStuff(myTeamTest)
+
+    myTeamTest2 = [{'id': 203, 'imageUrl': 'http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Kindred_0.jpg', 'name': 'Kindred', 'summoner': 'Choerry', 'summonerId': 22042123}, {'id': 57, 'imageUrl': 'http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Maokai_0.jpg', 'name': 'Maokai', 'summoner': 'Protechi', 'summonerId': 22687570}, {'id': 43, 'imageUrl': 'http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Karma_0.jpg', 'name': 'Karma', 'summoner': 'GaoGao', 'summonerId': 22946266}, {'id': 22, 'imageUrl': 'http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Ashe_0.jpg', 'name': 'Ashe', 'summoner': 'emeliorate', 'summonerId': 86409325}, {'id': 90, 'imageUrl': 'http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Malzahar_0.jpg', 'name': 'Malzahar', 'summoner': 'OneseIf', 'summonerId': 170340}, {'id': 101, 'imageUrl': 'http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Xerath_0.jpg', 'name': 'Xerath', 'summoner': 'Fockus', 'summonerId': 22787428}, {'id': 201, 'imageUrl': 'http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Braum_0.jpg', 'name': 'Braum', 'summoner': 'LEE SlN BAYBEE', 'summonerId': 23162732}, {'id': 68, 'imageUrl': 'http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Rumble_0.jpg', 'name': 'Rumble', 'summoner': 'Mysterìous', 'summonerId': 39877298}, {'id': 104, 'imageUrl': 'http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Graves_0.jpg', 'name': 'Graves', 'summoner': 'godrjsdnd', 'summonerId': 52316360}, {'id': 119, 'imageUrl': 'http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Draven_0.jpg', 'name': 'Draven', 'summoner': 'ArrSEA', 'summonerId': 28949426}]
+
+
+    print(myTeamTest2)
+    Run_keras.buildModel()
+    print(connectStuff(myTeamTest))

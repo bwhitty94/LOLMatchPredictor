@@ -1,39 +1,30 @@
-from flask import Blueprint, request, jsonify, json, abort
-import cassiopeia as cass
-from cassiopeia import Champion
+from flask import Blueprint, request, jsonify
+from summonerTeam import get_teams
+from APIKey import APIKey, region
+
 
 summoner_api = Blueprint('summoner_api', __name__)
 
 
 @summoner_api.route("/find", methods=['GET'])
-def find_summoner():
-    data = request.args
-    name = data['name']
+def get_summoner():
+    try:
+        data = request.args
+        name = data['name']
+        teams = get_teams(region, name, APIKey)
 
-    summoner = cass.get_summoner(name=name)
+        return jsonify(blueTeam=teams[0:5], redTeam=teams[5:10])
 
-    if not summoner.exists:
-        return jsonify(error="Summoner name not found!")
+    except KeyError as e:
+        cause = e.args[0]
 
-    if not summoner.current_match.exists:
-        return jsonify(error="" + summoner.name + " is not currently in a match!")
+        if cause == 'id':
+            error = "Summoner " + name + " not found!"
+        elif cause == 'participants':
+            error = "Summoner is not currently in a match!"
+        else:
+            error = "idk"
+            print("cause:")
+            print(cause)
 
-    blue_team = get_champions(summoner.current_match.blue_team.participants)
-    red_team = get_champions(summoner.current_match.red_team.participants)
-
-    return jsonify(summoner=name, currentMatchId=summoner.current_match.id, blueTeam=blue_team, redTeam=red_team)
-
-
-# return a list of Champion objects from a list of participants (team)
-def get_champions(team):
-    champions = []
-    image_base_url = "http://ddragon.leagueoflegends.com/cdn/img/champion/loading/"
-
-    for participant in team:
-        champ = Champion(id=participant.champion.id)
-        image = image_base_url + champ.image.full.split(".")[0] + "_0.jpg"
-
-        champions.append({"summoner": participant.summoner.name, "id": champ.id, "name": champ.name, "imageUrl": image,
-                          "summonerId": participant.summoner.id})
-
-    return champions
+        return jsonify(error=error)

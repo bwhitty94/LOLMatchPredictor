@@ -1,17 +1,6 @@
-/*
-input#summonerName {
-    color: white;
-    background-color: black;
-    border: 2px solid #777777;
-    border-radius: 4px;
-    padding-left: 1%;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    width: 15%;
-    box-sizing: border-box;
-    font-size: 125%;
+select {
+    color: black;
 }
-*/
 
 .col-centered {
     margin: 0 auto;

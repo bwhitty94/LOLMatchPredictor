@@ -7,7 +7,7 @@ import cassiopeia as cass
 import leagues
 import py_gg
 import ChampWins
-import settings
+from APIKey import APIKey, region
 
 
 def requestSummonerData(region, summonerName, APIKey):
@@ -59,8 +59,6 @@ with open('Data\matches1.json') as data_file:
     duration = data["matches"][0]["gameDuration"]
     matches = data["matches"]
     Id = data["matches"][0]
-    region = "na1"
-    APIKey = settings.getAPIKey()
     newfile = open("newfile.txt", "w+")
 
     ## Ranks
