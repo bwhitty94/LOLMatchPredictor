@@ -21,10 +21,10 @@ app.controller('home', function($rootScope, $scope, $location, $window, $compile
 
     function getPrediction() {
         $.ajax({
-            url: "/summoner/find?name=" + $('#summonerName').val(),
+            url: "/prediction",
             type: "get",
             success: function(response) {
-
+                prediction.value = response.value;
             },
             error: function(xhr) {
             //Do Something to handle error

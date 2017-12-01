@@ -1,5 +1,6 @@
 from flask import Flask, send_file
 import cassiopeia as cass
+from Run_keras import buildModel
 
 import views.summoner
 
@@ -16,7 +17,7 @@ def main():
 @app.before_first_request
 def cass_setup():
     cass.apply_settings("cassSettings.json")
-
+    buildModel()
 
 if __name__ == "__main__":
     app.run(debug=True)

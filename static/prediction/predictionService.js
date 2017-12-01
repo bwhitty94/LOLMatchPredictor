@@ -6,4 +6,5 @@ app.service("prediction", function() {
     var currentMatchId;
     var blueTeam;
     var redTeam;
+    var value;
 });

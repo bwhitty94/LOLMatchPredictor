@@ -93,3 +93,7 @@
 .predictionText.redTeam {
     color: #e24444;
 }
+
+.predictionText.neutral {
+    color: white;
+}
