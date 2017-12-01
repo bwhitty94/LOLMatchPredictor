@@ -3,10 +3,12 @@ import cassiopeia as cass
 from Run_keras import buildModel
 
 import views.summoner
+import connectBens
 
 app = Flask(__name__)
 
 app.register_blueprint(views.summoner.summoner_api, url_prefix="/summoner")
+app.register_blueprint(connectBens.predict_api, url_prefix="/predict")
 
 
 @app.route("/")
@@ -17,7 +19,7 @@ def main():
 @app.before_first_request
 def cass_setup():
     cass.apply_settings("cassSettings.json")
-    buildModel()
+    # buildModel()
 
 if __name__ == "__main__":
     app.run(debug=True)

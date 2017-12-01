@@ -2,7 +2,12 @@ import requests
 import time
 import ChampWins
 import settings
+import numpy
+import Run_keras
+from flask import Blueprint, jsonify, request
+import sys
 
+predict_api = Blueprint('predict_api', __name__)
 
 def requestSummonerData(region, summonerName, APIKey):
     URL = "https://" + region + ".api.riotgames.com/lol/summoner/v3/summoners/by-name/" + summonerName + "?api_key=" + APIKey
@@ -44,7 +49,15 @@ def win_loss_ratio(rankedData, k):
     losses = rankedData[0]['entries'][k]['losses']
     return wins/(wins + losses)
 
-def connectStuff(team):
+
+@predict_api.route("/get", methods=['POST'])
+def connectStuff():
+    data = request.json
+    print("hello")
+    print(data)
+    sys.stdout.flush()
+    team = data['team']
+
     summonerId = []
     championId = []
     winLossOne = ""
@@ -58,7 +71,7 @@ def connectStuff(team):
         summonerId.append(team[e]["summonerId"])
         championId.append(team[e]["id"])
     region = "na1"
-    APIKey = settings.getAPIKey()
+    APIKey = "RGAPI-5082f84e-572a-4fe0-8312-ea61e69bac22"
     currentmatchfile = open("currentmatchfile.txt", "w+")
     number_matches = 0
 
@@ -115,18 +128,20 @@ def connectStuff(team):
         tmpString += str(champ_winrate[0:5]).strip("[]") + ", "
         tmpString += str(teamArrayTwo).strip("[]") + ", "
         tmpString += winLossTwo
-        tmpString += str(champ_winrate[5:10]).strip("[]") + ", "
+        tmpString += str(champ_winrate[5:10]).strip("[]")
         currentmatchfile.write(tmpString)
+        currentmatchfile.flush()
 
         number_matches += 1
         print("We went through the list of players Ben!: Successful Exit")
-        time.sleep(2)
+        thing = numpy.loadtxt("currentmatchfile.txt",delimiter =",")
+        thing_2= thing[0:38]
 
 
- # keep this in incase you want to change this function
-        if( number_matches >= 8 ):
-            number_matches = 0
-            time.sleep(130)
+        # return jsonify(value=Run_keras.predictMatch(thing_2))
+        return jsonify(value=3)
+
+
 
 
 if __name__ == "__main__":
